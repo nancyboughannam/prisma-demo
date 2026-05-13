@@ -18,6 +18,8 @@ model Author {
   email String @unique
   name  String
   books Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Book {
@@ -25,4 +27,25 @@ model Book {
   title    String
   authorId String
   author   Author @relation(fields: [authorId], references: [id])
+  publisherId String
+  publisher   Publisher @relation(fields: [publisherId], references: [id])
+  genres Genre[] @relation("BookGenres")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Publisher {
+  id       String @id @default(uuid())
+  name    String
+  books Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id       String @id @default(uuid())
+  name    String
+  books Book[] @relation("BookGenres")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
